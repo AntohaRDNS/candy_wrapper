@@ -1,4 +1,4 @@
-extends Node2D
+extends Control
 
 var tmpath := "res://TileMap/"
 enum {TILE_WALL = 0, TILE_PLAYER = 1, TILE_GOOBER = 2}
@@ -12,6 +12,8 @@ var SceneExplo = load("res://Scene/Explosion.tscn")
 @onready var NodeAudioWin := $Audio/Win
 @onready var NodeAudioLose := $Audio/Lose
 @onready var NodeSprite := $Sprite2D
+@onready var label: Label = $label
+
 
 var clock := 0.0
 var delay := 1.5

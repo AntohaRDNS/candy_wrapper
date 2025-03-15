@@ -16,11 +16,11 @@ modules:
   sources:
 
   - type: dir
-    path: ../
+	path: ../
 
   - type: file
-    url: https://github.com/cassidyjames/CandyWrapper/releases/download/4.2/Candy.pck
-    sha256: 7c11ea89cf8695a733f576fe8ef4649f546c986372b47e5e31804f65b353f717
+	url: https://github.com/cassidyjames/CandyWrapper/releases/download/4.2/Candy.pck
+	sha256: 7c11ea89cf8695a733f576fe8ef4649f546c986372b47e5e31804f65b353f717
 
   build-commands:
   - install -Dm644 Candy.pck ${FLATPAK_DEST}/bin/godot-runner.pck

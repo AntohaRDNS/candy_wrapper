@@ -1,12 +1,19 @@
-[gd_scene load_steps=6 format=3 uid="uid://cnbp88623k5jh"]
+[gd_scene load_steps=7 format=3 uid="uid://cnbp88623k5jh"]
 
 [ext_resource type="Script" uid="uid://53duobpbwbxp" path="res://Script/Game.gd" id="1"]
 [ext_resource type="Script" uid="uid://ber30nhbswcfr" path="res://Script/CandySpawner.gd" id="2"]
 [ext_resource type="AudioStream" uid="uid://bu4rmhfiu1mm5" path="res://Audio/Win.ogg" id="3"]
 [ext_resource type="Texture2D" uid="uid://ccxmd1v0nd7wi" path="res://Image/Title.png" id="3_rwxge"]
 [ext_resource type="AudioStream" uid="uid://dgnfi0xvfvhnx" path="res://Audio/Lose.wav" id="4"]
+[ext_resource type="FontFile" uid="uid://cc7vd4vhe0b58" path="res://Font/GlasstownNbpRegular-RyMM.ttf" id="4_3xgnh"]
 
-[node name="Game" type="Node2D"]
+[node name="Game" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1")
 
 [node name="HUD" type="CanvasLayer" parent="."]
@@ -26,6 +33,17 @@ texture = ExtResource("3_rwxge")
 centered = false
 hframes = 4
 frame = 1
+
+[node name="label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_3xgnh")
+text = "НУБИК МИНИ"
 
 [node name="Audio" type="Node" parent="."]
 
