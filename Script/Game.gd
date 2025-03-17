@@ -11,21 +11,22 @@ var SceneExplo = load("res://Scene/Explosion.tscn")
 @onready var NodeGoobers := $Goobers
 @onready var NodeAudioWin := $Audio/Win
 @onready var NodeAudioLose := $Audio/Lose
-@onready var NodeSprite := $Sprite2D
 @onready var label: Label = $label
-
 
 var clock := 0.0
 var delay := 1.5
 var check := false
 var change := false
 
+
 func _ready():
 	global.Game = self
 	
 	if global.level == global.firstLevel or global.level == global.lastLevel:
-		NodeSprite.frame = 0 if global.level == global.firstLevel else 3
-		NodeSprite.visible = true
+		
+		label.text = tr("TITLE") if global.level == global.firstLevel else tr("GAME_COMPLITE")
+		label.visible = true
+		
 		var p = ScenePlayer.instantiate()
 		p.position = Vector2(72, 85)
 		p.scale.x = -1 if randf() < 0.5 else 1
@@ -34,6 +35,7 @@ func _ready():
 	
 	MapLoad()
 	MapStart()
+
 
 func _process(delta):
 	clock += delta
@@ -44,12 +46,14 @@ func _process(delta):
 	
 	MapChange(delta)
 
+
 func MapLoad():
 	var nxtlvl = min(global.level, global.lastLevel)
 	var tm = load(tmpath + str(nxtlvl) + ".tscn").instantiate()
 	tm.name = "TileMap"
 	add_child(tm)
 	NodeTileMap = tm
+
 
 func MapStart():
 	print("--- MapStart: Begin ---")
@@ -70,6 +74,7 @@ func MapStart():
 			NodeTileMap.set_cell(0, pos, -1)
 	print("--- MapStart: End ---")
 
+
 func MapChange(delta):
 	# if its time to change scene
 	if change:
@@ -86,23 +91,32 @@ func MapChange(delta):
 		if count == 0:
 			Win()
 
+
 func Lose():
 	change = true
 	NodeAudioLose.play()
-	NodeSprite.visible = true
-	NodeSprite.frame = 2
+	
+	label.text = tr("GAME_OVER")
+	label.visible = true
+	
 	global.level = max(0, global.level - 1)
+
 
 func Win():
 	change = true
 	NodeAudioWin.play()
-	NodeSprite.visible = true
+	
+	label.text = tr("LEVEL_COMPLITE")
+	label.visible = true
+		
 	global.level = min(global.lastLevel, global.level + 1)
 	print("Level Complete!, change to level: ", global.level)
+
 
 func DoChange():
 	change = false
 	get_tree().reload_current_scene()
+
 
 func Explode(arg : Vector2):
 	var xpl = SceneExplo.instantiate()
