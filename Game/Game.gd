@@ -3,7 +3,7 @@ extends Control
 
 var tilemaps_path := "res://TileMaps/"
 enum {TILE_WALL = 0, TILE_PLAYER = 1, TILE_GOOBER = 2}
-var NodeTileMap
+var tileMapLayer: TileMapLayer
 
 var ScenePlayer = load("uid://b17jmr687k1sm")
 var SceneGoober = load("uid://byheefdx4lxmx")
@@ -57,26 +57,26 @@ func MapLoad():
 	var tm = load(tilemaps_path + str(nxtlvl) + ".tscn").instantiate()
 	tm.name = "TileMap"
 	canvas_center.add_child(tm)
-	NodeTileMap = tm
+	tileMapLayer = tm
 
 
 func MapStart():
 	print("--- MapStart: Begin ---")
 	print("global.level: ", global.level)
-	for pos in NodeTileMap.get_used_cells(0):
-		var id = NodeTileMap.get_cell_source_id(0, pos)
+	for pos in tileMapLayer.get_used_cells():
+		var id = tileMapLayer.get_cell_source_id(pos)
 		if id == TILE_WALL:
 			print(pos, ": Wall")
 			var atlas = Vector2(randi_range(0, 2), randi_range(0, 2))
-			NodeTileMap.set_cell(0, pos, TILE_WALL, atlas)
+			tileMapLayer.set_cell(pos, TILE_WALL, atlas)
 		elif id == TILE_PLAYER or id == TILE_GOOBER:
 			var p = id == TILE_PLAYER
 			print(pos, ": Player" if p else ": Goober")
 			var inst = (ScenePlayer if p else SceneGoober).instantiate()
-			inst.position = NodeTileMap.map_to_local(pos) + Vector2(4, 0 if p else 1)
+			inst.position = tileMapLayer.map_to_local(pos) + Vector2(4, 0 if p else 1)
 			(self if p else NodeGoobers).add_child(inst)
 			# remove tile from map
-			NodeTileMap.set_cell(0, pos, -1)
+			tileMapLayer.set_cell(pos, -1)
 	print("--- MapStart: End ---")
 
 
