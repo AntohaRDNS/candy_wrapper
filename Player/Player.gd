@@ -12,10 +12,11 @@ var grv := 255.0
 var jumpSpd := 133.0
 var termVel := 400.0
 
-var onFloor := false
+var is_on_floor := false
 var jump := false
 
 func _physics_process(delta):
+	#print("is_on_floor: " + str(is_on_floor))
 	# gravity
 	vel.y += grv * delta
 	vel.y = clamp(vel.y, -termVel, termVel)
@@ -25,7 +26,7 @@ func _physics_process(delta):
 	vel.x = btnx * spd
 	
 	# jump
-	if onFloor:
+	if is_on_floor:
 		if btn.p("jump"):
 			jump = true
 			vel.y = -jumpSpd
@@ -35,24 +36,27 @@ func _physics_process(delta):
 			jump = false
 			vel.y = jumpSpd / -3
 	
-	# apply movement
+	# apply movements
 	velocity = vel
 	move_and_slide()
-	position = global.wrapp(position)
+	global_position = global.wrapp(global_position)
+	
 	# check for Goobers
 	var hit = Overlap()
+	print("is_on_floor " + str(is_on_floor))
+	
 	if !hit:
 		if velocity.y == 0:
 			vel.y = 0
 		# check for floor 0.1 pixel down
-		onFloor = test_move(transform, Vector2(0, 0.1))
+		is_on_floor = test_move(transform, Vector2(0, 1) * delta)
 	
 	# sprite flip
 	if btnx != 0:
 		NodeSprite.flip_h = btnx < 0
 	
 	# animation
-	if onFloor:
+	if is_on_floor:
 		if btnx == 0:
 			TryLoop("Idle")
 		else:
@@ -75,7 +79,7 @@ func Overlap():
 		if par is Goober:
 			var above = position.y - 1 < par.position.y
 			
-			if onFloor or (vel.y < 0.0 and !above):
+			if is_on_floor or (vel.y < 0.0 and !above):
 				Die()
 			else:
 				hit = true

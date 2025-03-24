@@ -5,14 +5,14 @@ var tilemaps_path := "res://TileMaps/"
 enum {TILE_WALL = 0, TILE_PLAYER = 1, TILE_GOOBER = 2}
 var tileMapLayer: TileMapLayer
 
-var ScenePlayer = load("uid://b17jmr687k1sm")
-var SceneGoober = load("uid://byheefdx4lxmx")
-var SceneExplo = load("uid://c2pdo2im2v8d1")
+var ScenePlayer: PackedScene = load("uid://b17jmr687k1sm")
+var SceneGoober: PackedScene = load("uid://byheefdx4lxmx")
+var SceneExplo: PackedScene = load("uid://c2pdo2im2v8d1")
 
-@onready var NodeGoobers := %Goobers
+@onready var goobers_parent := %Goobers
 @onready var NodeAudioWin := $Audio/Win
 @onready var NodeAudioLose := $Audio/Lose
-@onready var label: Label = $label
+@onready var label: Label = %label
 
 var clock := 0.0
 var delay := 1.5
@@ -39,7 +39,6 @@ func _ready():
 		canvas_center.add_child(p)
 	
 	MapLoad()
-	MapStart()
 
 
 func _process(delta):
@@ -53,31 +52,51 @@ func _process(delta):
 
 
 func MapLoad():
-	var nxtlvl = min(global.level, global.lastLevel)
-	var tm = load(tilemaps_path + str(nxtlvl) + ".tscn").instantiate()
+	
+	print("--- MapLoad ---")
+	var next_level_idx = min(global.level, global.lastLevel)
+	var tm = load(tilemaps_path + str(next_level_idx) + ".tscn").instantiate()
 	tm.name = "TileMap"
 	canvas_center.add_child(tm)
 	tileMapLayer = tm
-
-
-func MapStart():
-	print("--- MapStart: Begin ---")
+	
+	print("--- MapLoad: Begin ---")
 	print("global.level: ", global.level)
+	
 	for pos in tileMapLayer.get_used_cells():
 		var id = tileMapLayer.get_cell_source_id(pos)
+		
 		if id == TILE_WALL:
 			print(pos, ": Wall")
 			var atlas = Vector2(randi_range(0, 2), randi_range(0, 2))
 			tileMapLayer.set_cell(pos, TILE_WALL, atlas)
-		elif id == TILE_PLAYER or id == TILE_GOOBER:
-			var p = id == TILE_PLAYER
-			print(pos, ": Player" if p else ": Goober")
-			var inst = (ScenePlayer if p else SceneGoober).instantiate()
-			inst.position = tileMapLayer.map_to_local(pos) + Vector2(4, 0 if p else 1)
-			(self if p else NodeGoobers).add_child(inst)
+			#
+		#elif id == TILE_PLAYER or id == TILE_GOOBER:
+			#var p = id == TILE_PLAYER
+			#print(pos, ": Player" if p else ": Goober")
+			#var inst = (ScenePlayer if p else SceneGoober).instantiate()
+			#
+			#inst.position = tileMapLayer.map_to_local(pos) + Vector2(4, 0 if p else 1)
+			#(self if p else goobers_parent).add_child(inst)
+			#
+			## remove tile from map
+			#tileMapLayer.set_cell(pos, -1)
+			
+		elif id == TILE_PLAYER:
+			var inst = ScenePlayer.instantiate()
+			inst.position = tileMapLayer.map_to_local(pos) #+ Vector2(4, 0)
+			canvas_center.add_child(inst)
+			tileMapLayer.set_cell(pos, -1)
+			# remove tile from map
+			
+		elif id == TILE_GOOBER:
+			var inst = SceneGoober.instantiate()
+			inst.position = tileMapLayer.map_to_local(pos) #+ Vector2(4, 1)
+			goobers_parent.add_child(inst)
 			# remove tile from map
 			tileMapLayer.set_cell(pos, -1)
-	print("--- MapStart: End ---")
+			
+	print("--- MapLoad: End ---")
 
 
 func MapChange(delta):
@@ -91,7 +110,7 @@ func MapChange(delta):
 	# should i check?
 	if check:
 		check = false
-		var count = NodeGoobers.get_child_count()
+		var count = goobers_parent.get_child_count()
 		print("Goobers: ", count)
 		if count == 0:
 			Win()
