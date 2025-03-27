@@ -10,6 +10,7 @@ func _ready():
 	get_viewport().size_changed.connect(update_info)
 	pass
 
+
 func update_info() -> void:
 	#print(DisplayServer.window_get_max_size())
 	print(get_viewport().size)

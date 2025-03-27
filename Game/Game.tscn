@@ -7,13 +7,7 @@
 [ext_resource type="AudioStream" uid="uid://bu4rmhfiu1mm5" path="res://Player/Audio/Win.ogg" id="5_q6w4l"]
 [ext_resource type="AudioStream" uid="uid://dgnfi0xvfvhnx" path="res://Player/Audio/Lose.wav" id="6_gp3ee"]
 
-[node name="Game" type="Control"]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="Game" type="Node2D"]
 script = ExtResource("1_ghvq8")
 
 [node name="Audio" type="Node" parent="."]
@@ -47,10 +41,7 @@ vertical_alignment = 1
 anchor_mode = 0
 
 [node name="canvas_center" type="Node2D" parent="."]
+scale = Vector2(3, 3)
 
 [node name="CandySpawner" type="Node2D" parent="canvas_center"]
-visible = false
 script = ExtResource("3_oscxy")
-
-[node name="Goobers" type="Node2D" parent="canvas_center"]
-unique_name_in_owner = true
