@@ -10,7 +10,6 @@ var ScenePlayer: PackedScene = load("uid://b17jmr687k1sm")
 var SceneGoober: PackedScene = load("uid://byheefdx4lxmx")
 var SceneExplo: PackedScene = load("uid://c2pdo2im2v8d1")
 
-@onready var goobers_parent := %Goobers
 @onready var NodeAudioWin := $Audio/Win
 @onready var NodeAudioLose := $Audio/Lose
 @onready var label: Label = %label
@@ -131,7 +130,7 @@ func DoChange():
 func Explode(arg : Vector2):
 	var xpl = SceneExplo.instantiate()
 	xpl.position = arg
-	add_child(xpl)
+	tile_map_layer.add_child(xpl)
 	
 	
 func _enter_tree() -> void:
