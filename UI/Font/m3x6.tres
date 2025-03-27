@@ -1,0 +1,6 @@
+[gd_resource type="FontFile" load_steps=2 format=2]
+
+[ext_resource type="FontFile" uid="uid://d3xp4agbq2lok" path="res://UI/Font/m3x6.ttf" id="1"]
+
+[resource]
+font_data = ExtResource( 1 )

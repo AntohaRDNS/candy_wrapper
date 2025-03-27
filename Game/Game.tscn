@@ -1,0 +1,47 @@
+[gd_scene load_steps=7 format=3 uid="uid://cnbp88623k5jh"]
+
+[ext_resource type="Script" uid="uid://53duobpbwbxp" path="res://Game/Game.gd" id="1_ghvq8"]
+[ext_resource type="PackedScene" uid="uid://cffrea3gg2ypp" path="res://Music/Music.tscn" id="2_fuqhk"]
+[ext_resource type="Script" uid="uid://ber30nhbswcfr" path="res://Candy/CandySpawner.gd" id="3_oscxy"]
+[ext_resource type="FontFile" uid="uid://cc7vd4vhe0b58" path="res://UI/Font/GlasstownNbpRegular-RyMM.ttf" id="4_eqev2"]
+[ext_resource type="AudioStream" uid="uid://bu4rmhfiu1mm5" path="res://Player/Audio/Win.ogg" id="5_q6w4l"]
+[ext_resource type="AudioStream" uid="uid://dgnfi0xvfvhnx" path="res://Player/Audio/Lose.wav" id="6_gp3ee"]
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_ghvq8")
+
+[node name="Audio" type="Node" parent="."]
+
+[node name="Music" parent="Audio" instance=ExtResource("2_fuqhk")]
+
+[node name="Win" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("5_q6w4l")
+
+[node name="Lose" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("6_gp3ee")
+
+[node name="HUD" type="CanvasLayer" parent="."]
+layer = 10
+
+[node name="label" type="Label" parent="HUD"]
+unique_name_in_owner = true
+z_index = 5
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_eqev2")
+theme_override_font_sizes/font_size = 200
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Camera2D" type="Camera2D" parent="."]
+anchor_mode = 0
+
+[node name="canvas_center" type="Node2D" parent="."]
+scale = Vector2(3, 3)
+
+[node name="CandySpawner" type="Node2D" parent="canvas_center"]
+script = ExtResource("3_oscxy")
