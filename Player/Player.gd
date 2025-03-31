@@ -9,21 +9,21 @@ extends CharacterBody2D
 
 var vel := Vector2.ZERO
 var vel_threshold := 400.0
-var spd := 60.0
-var grv := 255.0
-var jump_force := 300.0
+@onready var speed := 60.0
+@export var gravity := 255.0
+@export var jump_force := 500.0
 
 var is_on_floor := false
 var is_jump := false
 
 func _physics_process(delta):
 	# gravity
-	vel.y += grv * delta
+	vel.y += gravity * delta
 	vel.y = clamp(vel.y, -vel_threshold, vel_threshold)
 	
 	# horizontal input
 	var axis_h = Input.get_axis("ui_left", "ui_right")
-	vel.x = axis_h * spd
+	vel.x = axis_h * speed
 	
 	# jump
 	if is_on_floor:

@@ -37,3 +37,4 @@ locale/translations=PackedStringArray("res://Translation/Translation.en.translat
 
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+environment/stretch/aspect="expand"
