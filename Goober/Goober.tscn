@@ -38,6 +38,7 @@ collision_layer = 4
 script = ExtResource("1_y4tps")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(1, 0.522786, 0.485104, 1)
 position = Vector2(0, -1)
 texture = ExtResource("2_o2ny6")
 hframes = 3

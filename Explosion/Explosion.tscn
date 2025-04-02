@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://c2pdo2im2v8d1"]
 
 [ext_resource type="Texture2D" uid="uid://d24wavdwab2qx" path="res://Explosion/Explosion.png" id="1_snjkg"]
-[ext_resource type="AudioStream" uid="uid://b31exg3ofm45k" path="res://Player/Audio/Death.ogg" id="2_3wlyo"]
+[ext_resource type="AudioStream" uid="uid://cfxckngfdg2s" path="res://Player/Audio/Death.mp3" id="2_snjkg"]
 
 [sub_resource type="Animation" id="1"]
 resource_name = "Idle"
@@ -46,7 +46,8 @@ hframes = 4
 frame = 1
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("2_3wlyo")
+stream = ExtResource("2_snjkg")
+volume_db = -10.0
 autoplay = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

@@ -2,24 +2,24 @@ class_name Game
 extends Node2D
 
 
-var tilemaps_path := "res://TileMaps/"
 enum {TILE_WALL = 0, TILE_PLAYER = 1, TILE_GOOBER = 2}
+var tilemaps_path := "res://TileMaps/"
 var tile_map_layer: TileMapLayer
 
-var ScenePlayer: PackedScene = load("uid://b17jmr687k1sm")
-var SceneGoober: PackedScene = load("uid://byheefdx4lxmx")
-var SceneExplo: PackedScene = load("uid://c2pdo2im2v8d1")
+var player_scene: PackedScene = load("uid://b17jmr687k1sm")
+var goober_scene: PackedScene = load("uid://byheefdx4lxmx")
+var exlosion_scene: PackedScene = load("uid://c2pdo2im2v8d1")
 
-@onready var NodeAudioWin := $Audio/Win
-@onready var NodeAudioLose := $Audio/Lose
+@onready var audio_win := %Audio/Win
+@onready var audio_loose := %Audio/Lose
 @onready var label: Label = %label
+@onready var canvas_center: Node2D = $canvas_center
 
 var clock := 0.0
 var delay := 1.5
 var check := false
 var change := false
 
-@onready var canvas_center: Node2D = $canvas_center
 
 
 func _ready():
@@ -35,7 +35,7 @@ func _ready():
 		label.text = tr("TITLE") if global.level == global.firstLevel else tr("GAME_COMPLITE")
 		label.visible = true
 		
-		var p = ScenePlayer.instantiate()
+		var p = player_scene.instantiate()
 		p.position = Vector2(72, 85)
 		p.scale.x = -1 if randf() < 0.5 else 1
 		p.set_script(null)
@@ -73,7 +73,7 @@ func MapLoad():
 		var id = tile_map_layer.get_cell_source_id(pos)
 			
 		if id == TILE_PLAYER:
-			var inst = ScenePlayer.instantiate()
+			var inst = player_scene.instantiate()
 			var position_local = tile_map_layer.map_to_local(pos)
 			inst.position = position_local
 			tile_map_layer.add_child(inst)
@@ -81,7 +81,7 @@ func MapLoad():
 			tile_map_layer.set_cell(pos, -1)
 			
 		elif id == TILE_GOOBER:
-			var inst = SceneGoober.instantiate()
+			var inst = goober_scene.instantiate()
 			var position_local = tile_map_layer.map_to_local(pos)
 			inst.position = position_local
 			tile_map_layer.add_child(inst)
@@ -110,7 +110,7 @@ func MapChange(delta):
 
 func Lose():
 	change = true
-	NodeAudioLose.play()
+	audio_loose.play()
 	
 	label.text = tr("GAME_OVER")
 	label.visible = true
@@ -120,7 +120,7 @@ func Lose():
 
 func Win():
 	change = true
-	NodeAudioWin.play()
+	audio_win.play()
 	
 	label.text = tr("LEVEL_COMPLITE")
 	label.visible = true
@@ -135,7 +135,7 @@ func DoChange():
 
 
 func Explode(arg : Vector2):
-	var xpl = SceneExplo.instantiate()
+	var xpl = exlosion_scene.instantiate()
 	xpl.position = arg
 	tile_map_layer.add_child(xpl)
 	
