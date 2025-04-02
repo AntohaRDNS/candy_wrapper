@@ -25,9 +25,9 @@ var change := false
 func _ready():
 	global.Game = self
 	
-	_on_viewport_changed()
-	get_tree().root.size_changed.connect(_on_viewport_changed)
-	
+	#setup_canvas_center
+	canvas_center.position = Vector2i(global.viewport_size_init.x / 2.0, global.viewport_size_init.y / 2.0)
+
 	Goober.goobers_count = 0
 		
 	if global.level == global.firstLevel or global.level == global.lastLevel:
@@ -43,11 +43,6 @@ func _ready():
 	
 	MapLoad()
 	
-
-func _on_viewport_changed() -> void:
-	print("SIZE: " + str(get_viewport().size))
-	canvas_center.global_position = get_viewport().size / 2.0
-	pass
 
 func _process(delta):
 	clock += delta

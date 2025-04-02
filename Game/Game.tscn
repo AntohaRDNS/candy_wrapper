@@ -64,7 +64,7 @@ grow_vertical = 2
 anchor_mode = 0
 
 [node name="canvas_center" type="Node2D" parent="."]
+scale = Vector2(2, 2)
 
 [node name="CandySpawner" type="Node2D" parent="canvas_center"]
-visible = false
 script = ExtResource("3_oscxy")

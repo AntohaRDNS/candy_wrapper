@@ -23,10 +23,10 @@ global="*res://Global/Global.gd"
 
 [display]
 
-window/size/viewport_width=920
-window/size/viewport_height=560
+window/size/viewport_width=500
+window/size/viewport_height=500
 window/size/always_on_top=true
-window/stretch/mode="canvas_items"
+window/stretch/mode="viewport"
 window/dpi/allow_hidpi=false
 
 [internationalization]
