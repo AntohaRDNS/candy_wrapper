@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://cnbp88623k5jh"]
+[gd_scene load_steps=8 format=3 uid="uid://cnbp88623k5jh"]
 
 [ext_resource type="Script" uid="uid://53duobpbwbxp" path="res://Game/Game.gd" id="1_ghvq8"]
 [ext_resource type="AudioStream" uid="uid://7sq3il53l6oa" path="res://Music/OST.mp3" id="2_ghvq8"]
@@ -6,6 +6,12 @@
 [ext_resource type="Script" uid="uid://ber30nhbswcfr" path="res://Candy/CandySpawner.gd" id="3_oscxy"]
 [ext_resource type="FontFile" uid="uid://cc7vd4vhe0b58" path="res://UI/Font/GlasstownNbpRegular-RyMM.ttf" id="4_eqev2"]
 [ext_resource type="AudioStream" uid="uid://ct4iq3kifsjor" path="res://Player/Audio/Loose.mp3" id="4_fuqhk"]
+
+[sub_resource type="Theme" id="Theme_ghvq8"]
+Label/colors/font_shadow_color = Color(0.48, 0.096, 0.2624, 0.568627)
+Label/constants/shadow_outline_size = 10
+Label/font_sizes/font_size = 100
+Label/fonts/font = ExtResource("4_eqev2")
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_ghvq8")
@@ -43,10 +49,7 @@ offset_right = 3.0
 offset_bottom = -226.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("4_eqev2")
-theme_override_font_sizes/font_size = 100
+theme = SubResource("Theme_ghvq8")
 text = "TITLE"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -59,6 +62,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+color = Color(0.841422, 0.393776, 0.332373, 1)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 anchor_mode = 0
