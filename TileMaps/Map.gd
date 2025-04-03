@@ -14,7 +14,7 @@ var hight_in_pixels: int
 
 var map_offset: Vector2 = Vector2.ZERO 
 
-
+ 
 func _ready() -> void:
 	_place_map_at_center()
 	pass
@@ -32,10 +32,7 @@ func _place_map_at_center() -> void:
 	
 	map_offset.x = width_in_pixels / 2.0 - tile_size.x
 	map_offset.y = hight_in_pixels / 2.0 - tile_size.y
-	
-	print("_____")
-	print_debug(str(width_in_pixels) + " " + str(hight_in_pixels))
-	
+		
 	tile_map_layer.position.x -= map_offset.x
 	tile_map_layer.position.y -= map_offset.y
 	pass

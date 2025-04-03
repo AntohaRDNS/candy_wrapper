@@ -62,7 +62,6 @@ func MapLoad():
 	tile_map_layer = tml.get_child(0)
 	
 	print("--- MapLoad: Begin ---")
-	print("global.level: ", global.level)
 	
 	for pos in tile_map_layer.get_used_cells():
 		var id = tile_map_layer.get_cell_source_id(pos)
@@ -98,7 +97,6 @@ func MapChange(delta):
 	# should i check?
 	if check:
 		check = false
-		print("Goobers: ", Goober.goobers_count)
 		if Goober.goobers_count == 0:
 			Win()
 
