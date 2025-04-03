@@ -8,15 +8,16 @@ var viewport_size_init: Vector2i
 
 
 func _ready():
-	get_viewport().size_changed.connect(update_info)
 	# viewport_size_init остается неизменнм для display/window/stretch/mode = viewport; aspect = keep
 	viewport_size_init = Vector2i(ProjectSettings.get_setting("display/window/size/viewport_width"), ProjectSettings.get_setting("display/window/size/viewport_height"))
+	process_mode = Node.PROCESS_MODE_ALWAYS
 	pass
 
 
-func update_info() -> void:
-	#print(DisplayServer.window_get_max_size())
-	print(get_viewport().size)
+func _input(event: InputEvent) -> void:
+	if(event is InputEventKey):
+		if((event.is_action_pressed("ui_home"))):
+			get_tree().paused = !get_tree().paused
 	pass
 
 
