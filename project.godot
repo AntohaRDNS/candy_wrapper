@@ -32,6 +32,8 @@ window/dpi/allow_hidpi=false
 [internationalization]
 
 locale/translations=PackedStringArray("res://Translation/Translation.en.translation", "res://Translation/Translation.ru.translation", "res://Translation/Translation.tr.translation")
+locale/test="ru"
+locale/fallback="ru"
 
 [rendering]
 
