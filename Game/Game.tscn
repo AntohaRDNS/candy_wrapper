@@ -3,15 +3,10 @@
 [ext_resource type="Script" uid="uid://53duobpbwbxp" path="res://Game/Game.gd" id="1_ghvq8"]
 [ext_resource type="AudioStream" uid="uid://7sq3il53l6oa" path="res://Music/OST.mp3" id="2_ghvq8"]
 [ext_resource type="AudioStream" uid="uid://cl0cywvln28q2" path="res://Player/Audio/Win.mp3" id="3_ghvq8"]
-[ext_resource type="Script" uid="uid://ber30nhbswcfr" path="res://Candy/CandySpawner.gd" id="3_oscxy"]
-[ext_resource type="FontFile" uid="uid://cc7vd4vhe0b58" path="res://UI/Font/GlasstownNbpRegular-RyMM.ttf" id="4_eqev2"]
 [ext_resource type="AudioStream" uid="uid://ct4iq3kifsjor" path="res://Player/Audio/Loose.mp3" id="4_fuqhk"]
-
-[sub_resource type="Theme" id="Theme_ghvq8"]
-Label/colors/font_shadow_color = Color(0.48, 0.096, 0.2624, 0.568627)
-Label/constants/shadow_outline_size = 10
-Label/font_sizes/font_size = 100
-Label/fonts/font = ExtResource("4_eqev2")
+[ext_resource type="Theme" uid="uid://ber8mnnujhib4" path="res://UI/theme.tres" id="5_ghvq8"]
+[ext_resource type="Texture2D" uid="uid://b25mbm374xybq" path="res://Candy/Candy.png" id="6_fuqhk"]
+[ext_resource type="Material" uid="uid://b6povoif51c4v" path="res://Candy/candy.material" id="6_oscxy"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_ghvq8")
@@ -26,12 +21,12 @@ stream = ExtResource("2_ghvq8")
 [node name="Win" type="AudioStreamPlayer" parent="Audio"]
 unique_name_in_owner = true
 stream = ExtResource("3_ghvq8")
-volume_db = -10.0
+volume_db = -20.0
 
 [node name="Lose" type="AudioStreamPlayer" parent="Audio"]
 unique_name_in_owner = true
 stream = ExtResource("4_fuqhk")
-volume_db = -10.0
+volume_db = -20.0
 
 [node name="HUD" type="CanvasLayer" parent="."]
 layer = 10
@@ -40,17 +35,17 @@ layer = 10
 unique_name_in_owner = true
 visible = false
 z_index = 5
-anchors_preset = 15
+anchors_preset = 14
+anchor_top = 0.5
 anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 3.0
-offset_top = 233.0
-offset_right = 3.0
-offset_bottom = -226.0
+anchor_bottom = 0.5
+offset_top = -50.5
+offset_bottom = 50.5
 grow_horizontal = 2
 grow_vertical = 2
-theme = SubResource("Theme_ghvq8")
-text = "TITLE"
+theme = ExtResource("5_ghvq8")
+text = "LABEL
+LABEL"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -62,13 +57,32 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.841422, 0.393776, 0.332373, 1)
+color = Color(0.717095, 0.368328, 0.334638, 1)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 anchor_mode = 0
 
-[node name="canvas_center" type="Node2D" parent="."]
-scale = Vector2(2, 2)
+[node name="particles_candy" type="CPUParticles2D" parent="."]
+material = ExtResource("6_oscxy")
+position = Vector2(480, -103)
+amount = 20
+texture = ExtResource("6_fuqhk")
+lifetime = 100.0
+preprocess = 10.0
+local_coords = true
+emission_shape = 3
+emission_rect_extents = Vector2(500, 20)
+particle_flag_align_y = true
+direction = Vector2(0, 1)
+spread = 0.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 40.0
+initial_velocity_max = 50.0
+angular_velocity_min = 720.0
+angular_velocity_max = 720.0
+scale_amount_min = 2.0
+scale_amount_max = 5.0
+color = Color(1, 1, 1, 0.196078)
 
-[node name="CandySpawner" type="Node2D" parent="canvas_center"]
-script = ExtResource("3_oscxy")
+[node name="canvas_center" type="Node2D" parent="."]
+scale = Vector2(3, 3)

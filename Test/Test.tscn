@@ -1,13 +1,25 @@
-[gd_scene load_steps=3 format=4 uid="uid://dugw5rut3gemo"]
+[gd_scene load_steps=4 format=3 uid="uid://dugw5rut3gemo"]
 
-[ext_resource type="TileSet" uid="uid://caem805hxljgn" path="res://TileMaps/TileSet.tres" id="1_tf838"]
-[ext_resource type="PackedScene" uid="uid://b17jmr687k1sm" path="res://Player/Player.tscn" id="2_n8bxl"]
+[sub_resource type="SphereShape3D" id="SphereShape3D_j8356"]
 
-[node name="Node2D" type="Node2D"]
+[sub_resource type="SphereShape3D" id="SphereShape3D_tf838"]
 
-[node name="Player" parent="." instance=ExtResource("2_n8bxl")]
-position = Vector2(164, 205)
+[sub_resource type="SphereMesh" id="SphereMesh_j8356"]
 
-[node name="TileMapLayer" type="TileMapLayer" parent="."]
-tile_map_data = PackedByteArray("AAAAABoAAAAAAAEAAAABABoAAAAAAAEAAAACABoAAAAAAAEAAAADABoAAAAAAAEAAAAEABoAAAAAAAEAAAAFABoAAAAAAAEAAAAGABoAAAAAAAEAAAAHABoAAAAAAAEAAAAIABoAAAAAAAEAAAAJABoAAAAAAAEAAAAKABoAAAAAAAEAAAALABoAAAAAAAEAAAAMABoAAAAAAAEAAAANABoAAAAAAAEAAAAOABoAAAAAAAEAAAAPABoAAAAAAAEAAAAQABoAAAAAAAEAAAARABoAAAAAAAEAAAASABoAAAAAAAEAAAATABoAAAAAAAEAAAAUABoAAAAAAAEAAAAVABoAAAAAAAEAAAAWABoAAAAAAAEAAAAXABoAAAAAAAEAAAAYABoAAAAAAAEAAAAZABoAAAAAAAEAAAAaABoAAAAAAAEAAAAbABoAAAAAAAEAAAAcABoAAAAAAAEAAAAdABoAAAAAAAEAAAAeABoAAAAAAAEAAAAfABoAAAAAAAEAAAAgABoAAAAAAAEAAAAhABoAAAAAAAEAAAAiABoAAAAAAAEAAAAjABoAAAAAAAEAAAAkABoAAAAAAAEAAAAlABoAAAAAAAEAAAAmABoAAAAAAAEAAAAnABoAAAAAAAEAAAAoABoAAAAAAAEAAAApABoAAAAAAAEAAAAqABoAAAAAAAEAAAArABoAAAAAAAEAAAAsABoAAAAAAAEAAAAtABoAAAAAAAEAAAAuABoAAAAAAAEAAAAvABoAAAAAAAEAAAAwABoAAAAAAAEAAAAxABoAAAAAAAEAAAAyABoAAAAAAAEAAAAzABoAAAAAAAEAAAA0ABoAAAAAAAEAAAA1ABoAAAAAAAEAAAA=")
-tile_set = ExtResource("1_tf838")
+[node name="Node3D" type="Node3D"]
+
+[node name="SpringArm3D" type="SpringArm3D" parent="."]
+shape = SubResource("SphereShape3D_j8356")
+
+[node name="RigidBody3D" type="RigidBody3D" parent="SpringArm3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SpringArm3D/RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.853933, 0)
+shape = SubResource("SphereShape3D_tf838")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SpringArm3D/RigidBody3D/CollisionShape3D"]
+mesh = SubResource("SphereMesh_j8356")
+skeleton = NodePath("../..")
+
+[node name="Camera3D" type="Camera3D" parent="SpringArm3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 9.38158)

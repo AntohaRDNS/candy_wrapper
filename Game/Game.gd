@@ -116,6 +116,7 @@ func Win():
 	audio_win.play()
 	
 	label.text = tr("LEVEL_COMPLITE")
+	await get_tree().create_timer(0.5).timeout
 	label.visible = true
 		
 	global.level = min(global.lastLevel, global.level + 1)
