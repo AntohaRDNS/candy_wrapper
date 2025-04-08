@@ -82,6 +82,7 @@ volume_db = -20.0
 position = Vector2(0, -1)
 texture = ExtResource("2")
 hframes = 7
+frame = 2
 region_rect = Rect2(0, 0, 8, 8)
 
 [node name="collision2D_collide" type="CollisionShape2D" parent="."]

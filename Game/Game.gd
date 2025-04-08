@@ -8,7 +8,6 @@ var tile_map_layer: TileMapLayer
 
 var player_scene: PackedScene = load("uid://b17jmr687k1sm")
 var goober_scene: PackedScene = load("uid://byheefdx4lxmx")
-var exlosion_scene: PackedScene = load("uid://c2pdo2im2v8d1")
 
 @onready var audio_win := %Audio/Win
 @onready var audio_loose := %Audio/Lose
@@ -17,7 +16,7 @@ var exlosion_scene: PackedScene = load("uid://c2pdo2im2v8d1")
 
 var clock := 0.0
 var delay := 1.5
-var check := false
+var check_win := false
 var change := false
 
 
@@ -94,9 +93,9 @@ func MapChange(delta):
 			DoChange()
 		return # skip the rest if change == true
 	
-	# should i check?
-	if check:
-		check = false
+	# should i check_win?
+	if check_win:
+		check_win = false
 		if Goober.goobers_count == 0:
 			Win()
 
@@ -126,12 +125,6 @@ func Win():
 func DoChange():
 	change = false
 	get_tree().reload_current_scene()
-
-
-func Explode(arg : Vector2):
-	var xpl = exlosion_scene.instantiate()
-	xpl.position = arg
-	tile_map_layer.add_child(xpl)
 	
 	
 func _enter_tree() -> void:

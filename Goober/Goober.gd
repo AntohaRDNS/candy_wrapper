@@ -4,6 +4,7 @@ class_name Goober
 static var goobers_count: int = 0
 @onready var raycast2D := $RayCast2D
 @onready var sprite := $Sprite2D
+var exlosion_scene: PackedScene = load("uid://c2pdo2im2v8d1")
 
 var spd := 30.0
 var vel := Vector2(spd, 0.001)
@@ -40,6 +41,13 @@ func flip():
 	flip_clock = 0.0
 	
 	
+func destroy():
+	var xpl = exlosion_scene.instantiate()
+	xpl.position = position
+	get_parent().add_child(xpl)
+	queue_free()
+	
+
 func _on_free() -> void:
 	goobers_count -= 1
 	pass

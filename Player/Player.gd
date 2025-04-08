@@ -38,18 +38,21 @@ func _physics_process(delta):
 	
 	if(raycast2D.is_colliding()):
 		if axis_h == 0:
+			#print("IDLE")
 			state = States.IDLE
-			try_start_animation("Idle")
+			animation_player.play("Idle")
 		if axis_h != 0:
 			state = States.WALK
-			try_start_animation("Run")
+			#print("WALK")
+			animation_player.play("Run")
 		if Input.is_action_just_pressed("ui_accept"):
 			state == States.JUMP
 			_velocity.y = -jump_force
 			audio.play()
-			try_start_animation("Jump")
+			#print("JUMP")
+			animation_player.play("Jump")
 			pass
-
+	
 	# check hit
 	for o in area2D.get_overlapping_areas():
 		var object = o.get_parent()
@@ -62,22 +65,13 @@ func _physics_process(delta):
 				die()
 			else:
 				_velocity.y = -jump_force
-				object.queue_free()
-				game.Explode(object.position)
-				game.check = true
+				object.destroy()
+				game.check_win = true
 	
 	# apply movements
 	velocity = _velocity
 	move_and_slide()
 	global_position = global.wrapp(global_position)
-
-
-func try_start_animation(arg : String):
-	if arg == animation_player.current_animation:
-		return false
-	else:
-		animation_player.play(arg)
-		return true
 		
 		
 func die():
