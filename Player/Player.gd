@@ -37,7 +37,7 @@ func _physics_process(delta):
 	sprite.flip_h = axis_h < 0
 	
 	# on the ground
-	if(raycast2D.is_colliding() and state != States.JUMP):
+	if(raycast2D.is_colliding() and state != States.JUMP):  # после нажатия кнопки прыжка, персонаж отрывается от земли не сразу, а через несколько кадров, поэтому необходимо проверять state == States.JUMP  
 		if(axis_h != 0):
 			state = States.WALK
 			_play_animation_if_not_already_player("Run")
@@ -46,11 +46,10 @@ func _physics_process(delta):
 			state = States.IDLE
 			_play_animation_if_not_already_player("Idle")
 			
-		if (Input.is_action_just_pressed("ui_accept")):  # после нажатия кнопки прыжка, персонаж отрывается от земли не сразу, а через несколько кадров, поэтому необходимо проверять state == States.JUMP  
+		if (Input.is_action_just_pressed("ui_accept")): 
 			state = States.JUMP
 			_velocity.y = -jump_force
 			audio.play()
-			#print("JUMP")
 			_play_animation_if_not_already_player("Jump")
 	
 	# at air
