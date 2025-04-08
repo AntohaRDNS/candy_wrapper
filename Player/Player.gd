@@ -9,7 +9,7 @@ var state: States = States.IDLE
 @onready var sprite := $Sprite2D
 @onready var area2D := $Area2D
 @onready var audio := $Audio
-@onready var animation_player := $AnimationPlayer
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var raycast2D: RayCast2D = $RayCast2D
 
 var _velocity := Vector2.ZERO
@@ -36,23 +36,31 @@ func _physics_process(delta):
 	# sprite flip
 	sprite.flip_h = axis_h < 0
 	
-	if(raycast2D.is_colliding()):
-		if axis_h == 0:
-			#print("IDLE")
-			state = States.IDLE
-			animation_player.play("Idle")
-		if axis_h != 0:
+	# on the ground
+	if(raycast2D.is_colliding() and state != States.JUMP):
+		if(axis_h != 0):
 			state = States.WALK
-			#print("WALK")
-			animation_player.play("Run")
-		if Input.is_action_just_pressed("ui_accept"):
-			state == States.JUMP
+			_play_animation_if_not_already_player("Run")
+			
+		if(axis_h == 0):
+			state = States.IDLE
+			_play_animation_if_not_already_player("Idle")
+			
+		if (Input.is_action_just_pressed("ui_accept")):  # после нажатия кнопки прыжка, персонаж отрывается от земли не сразу, а через несколько кадров, поэтому необходимо проверять state == States.JUMP  
+			state = States.JUMP
 			_velocity.y = -jump_force
 			audio.play()
 			#print("JUMP")
-			animation_player.play("Jump")
-			pass
+			_play_animation_if_not_already_player("Jump")
 	
+	# at air
+	else:
+		if (velocity.y > 0):
+			state = States.FALL
+		
+		if (velocity.y < 0):
+			state = States.JUMP
+					
 	# check hit
 	for o in area2D.get_overlapping_areas():
 		var object = o.get_parent()
@@ -62,7 +70,7 @@ func _physics_process(delta):
 			
 			# player fall down and goober is above
 			if state == States.IDLE or (_velocity.y < 0.0 and !is_player_above):
-				die()
+				_destroy()
 			else:
 				_velocity.y = -jump_force
 				object.destroy()
@@ -73,8 +81,16 @@ func _physics_process(delta):
 	move_and_slide()
 	global_position = global.wrapp(global_position)
 		
-		
-func die():
+	
+func _play_animation_if_not_already_player(_new_animation: String) -> void:
+	if animation_player.current_animation == _new_animation:
+		return
+	else:
+		animation_player.play(_new_animation)
+	pass
+
+
+func _destroy():
 	queue_free()
 	game.Explode(position)
 	game.Lose()
