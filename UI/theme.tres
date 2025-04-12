@@ -1,0 +1,10 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://ber8mnnujhib4"]
+
+[ext_resource type="FontFile" uid="uid://cc7vd4vhe0b58" path="res://UI/Font/GlasstownNbpRegular-RyMM.ttf" id="1_go05t"]
+
+[resource]
+Label/colors/font_shadow_color = Color(0.48, 0.096, 0.2624, 0.568627)
+Label/constants/line_spacing = -20
+Label/constants/shadow_outline_size = 10
+Label/font_sizes/font_size = 100
+Label/fonts/font = ExtResource("1_go05t")
